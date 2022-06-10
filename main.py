@@ -26,13 +26,11 @@ def update_pos():
 
 if __name__ == "__main__":
     sg.theme('DarkTeal')
-    window = sg.Window('Grafy - Projekt', layout)
+    window = sg.Window('Grafy - Projekt', layout, finalize=True)
+    update_app()
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
-            G.clear()
-            pos = update_pos()
-            update_graph(G, pos)
             break
 
         if event == 'Dodaj węzeł':
