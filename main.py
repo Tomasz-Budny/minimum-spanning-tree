@@ -1,3 +1,4 @@
+import numpy as np
 import PySimpleGUI as sg
 import networkx as nx
 from GraphPlot import update_graph, add_node, add_edge
