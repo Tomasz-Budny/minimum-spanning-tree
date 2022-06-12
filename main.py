@@ -74,6 +74,6 @@ if __name__ == "__main__":
                 remove_edge(G, selected_data1, selected_data2)
                 update_app()
             except nx.exception.NetworkXError:
-                print("There are no edges between selected vertices or there are no edges at all")
+                sg.Popup('Error', "There are no edges between selected vertices or there are no edges at all")
 
     window.close()
