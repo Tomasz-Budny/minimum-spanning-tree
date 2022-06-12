@@ -1,7 +1,7 @@
 import numpy as np
 import PySimpleGUI as sg
 import networkx as nx
-from GraphPlot import update_graph, add_node, add_edge, remove_node
+from GraphPlot import update_graph, add_node, add_edge, remove_node, remove_edge
 
 G = nx.Graph()
 pos = nx.shell_layout(G)
@@ -65,6 +65,16 @@ if __name__ == "__main__":
             if selected_data2 == "" or selected_data2 == "-":
                 continue
             add_edge(G, selected_data1, selected_data2)
+            update_app()
+
+        if event == 'Usuń krawędź':
+            selected_data1 = window['ddl1'].TKStringVar.get()
+            selected_data2 = window['ddl2'].TKStringVar.get()
+            if selected_data1 == "" or selected_data1 == "-":
+                continue
+            if selected_data2 == "" or selected_data2 == "-":
+                continue
+            remove_edge(G, selected_data1, selected_data2)
             update_app()
 
     window.close()
