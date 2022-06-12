@@ -42,8 +42,8 @@ def update_graph(G, pos):
     plt.savefig("graph.png", bbox_inches='tight')
 
 
-def add_edge(G, u, v):
-    G.add_edge(u, v)
+def add_edge(G, u, v, weight_of_edge):
+    G.add_edge(u, v, weight=weight_of_edge)
 
 
 def add_node(G, n, nodes_array):
