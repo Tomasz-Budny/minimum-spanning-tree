@@ -70,10 +70,14 @@ if __name__ == "__main__":
         if event == 'Usuń krawędź':
             selected_data1 = window['ddl1'].TKStringVar.get()
             selected_data2 = window['ddl2'].TKStringVar.get()
+            if selected_data1 == "" or selected_data1 == "-":
+                continue
+            if selected_data2 == "" or selected_data2 == "-":
+                continue
             try:
                 remove_edge(G, selected_data1, selected_data2)
                 update_app()
             except nx.exception.NetworkXError:
-                sg.Popup('Błąd', "Brak krawędzi między wybranymi wierzchołkami lub brak krawędzi w grafie")
+                sg.Popup('Błąd', "Brak krawędzi między wybranymi wierzchołkami")
 
     window.close()
