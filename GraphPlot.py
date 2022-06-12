@@ -57,4 +57,5 @@ def remove_node(G, n, nodes_array):
     G.remove_node(name)
     nodes_array.remove(name)
 
-#def remove_edge():
+def remove_edge(G, u, v):
+    G.remove_edge(u, v)
