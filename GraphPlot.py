@@ -50,3 +50,11 @@ def add_node(G, n, nodes_array):
     name = 'Dom ' + str(n)
     G.add_node(name)
     nodes_array.append(name)
+
+
+def remove_node(G, n, nodes_array):
+    name = name = 'Dom ' + str(n)
+    G.remove_node(name)
+    nodes_array.remove(name)
+
+#def remove_edge():

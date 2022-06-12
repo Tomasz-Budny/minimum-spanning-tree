@@ -1,7 +1,7 @@
 import numpy as np
 import PySimpleGUI as sg
 import networkx as nx
-from GraphPlot import update_graph, add_node, add_edge
+from GraphPlot import update_graph, add_node, add_edge, remove_node
 
 G = nx.Graph()
 pos = nx.shell_layout(G)
@@ -10,8 +10,8 @@ nodes_array = []
 
 layout = [
           [sg.Image('graph.png', key='graph_img', size=(630, 650))],
-          [sg.Button('Dodaj węzeł'), sg.Button('update'), sg.Button('clear')],
-          [sg.Button('Dodaj krawędź'), sg.OptionMenu(values=['-'], key='ddl1'), sg.OptionMenu(values=['-'], key='ddl2')]]
+          [sg.Button('Dodaj węzeł'), sg.Button('Usuń węzeł'), sg.Button('update'), sg.Button('clear')],
+          [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'), sg.OptionMenu(values=['-'], key='ddl2')]]
 
 
 def update_app():
@@ -37,6 +37,12 @@ if __name__ == "__main__":
         if event == 'Dodaj węzeł':
             add_node(G, n, nodes_array)
             n = n + 1
+            pos = update_pos()
+            update_app()
+
+        if event == 'Usuń węzeł':
+            remove_node(G, n-1, nodes_array)
+            n = n - 1
             pos = update_pos()
             update_app()
 
