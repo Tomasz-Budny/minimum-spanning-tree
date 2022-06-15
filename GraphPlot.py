@@ -3,9 +3,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-img = mpimg.imread('assets\\domek_small.png')
-
-
+img = mpimg.imread('assets\\domek_small.png')  
+    
 def update_graph(G, pos):
     labels = nx.get_edge_attributes(G, 'weight')
 
@@ -14,7 +13,21 @@ def update_graph(G, pos):
     ax = plt.subplot()
     plt.title('Sieć elektryczna')
     ax.set_aspect('equal')
+    
+    
+    #Moduł analizujący
     nx.draw_networkx_edges(G, pos, ax=ax)
+    
+    T = nx.minimum_spanning_tree(G)
+
+    #nałożenie czerwonych krawedzi na graf
+    nx.draw_networkx_edges(T, pos, width=1, edge_color="r")
+
+    #wypisuje posortowane najkrótsze krawędzie
+    sorted_edges = sorted(T.edges(data=True))
+    print(sorted_edges)
+    
+    #Moduł analizujący
 
     plt.xlim(-1.15, 1.15)
     plt.ylim(-1.15, 1.15)
@@ -41,12 +54,19 @@ def update_graph(G, pos):
     nx.draw_networkx_labels(G, label_pos, ax=ax, font_size=10, font_family='serif')
     plt.savefig("graph.png", bbox_inches='tight')
 
-
-def add_edge(G, u, v):
-    G.add_edge(u, v)
+def add_edge(G, u, v, weight_of_edge):
+    G.add_edge(u, v, weight=weight_of_edge)
 
 
 def add_node(G, n, nodes_array):
     name = 'Dom ' + str(n)
     G.add_node(name)
     nodes_array.append(name)
+
+def remove_node(G, n, nodes_array):
+    name = name = 'Dom ' + str(n)
+    G.remove_node(name)
+    nodes_array.remove(name)
+
+def remove_edge(G, u, v):
+    G.remove_edge(u, v)
