@@ -62,7 +62,7 @@ def add_node(G, n, nodes_array):
 
 
 def remove_node(G, n, nodes_array):
-    name = name = 'Dom ' + str(n)
+    name = 'Dom ' + str(n)
     G.remove_node(name)
     nodes_array.remove(name)
 
