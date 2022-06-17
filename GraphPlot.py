@@ -15,8 +15,8 @@ def update_graph(G, pos, T):
     plt.title('Sieć elektryczna')
     ax.set_aspect('equal')
     nx.draw_networkx_edges(G, pos, ax=ax)
-    # krawędzie minimalnego drzewa rozpinającego
-    nx.draw_networkx_edges(T, pos, width=1, edge_color="r")
+    # koloruje krawędzie minimalnego drzewa rozpinającego
+    nx.draw_networkx_edges(T, pos, width=5, edge_color="r")
     #Moduł analizujący
 
     plt.xlim(-1.15, 1.15)
