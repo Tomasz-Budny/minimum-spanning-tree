@@ -1,9 +1,10 @@
 import numpy as np
 import PySimpleGUI as sg
 import networkx as nx
-from GraphPlot import update_graph, add_node, add_edge, remove_node, remove_edge 
+from GraphPlot import update_graph, add_node, add_edge, remove_node, remove_edge, get_minimum_spanning_tree
 
 G = nx.Graph()
+T = nx.Graph()
 pos = nx.shell_layout(G)
 n = 1
 nodes_array = []
@@ -13,12 +14,13 @@ layout = [
     [sg.Button('Dodaj węzeł'), sg.Button('Usuń węzeł'),
      sg.Button('update'), sg.Button('clear')],
     [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'),
-     sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='ddl3')]
+     sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='ddl3')],
+    [sg.Button('Analizuj')]
 ]
 
 
 def update_app():
-    update_graph(G, pos)
+    update_graph(G, pos, T)
     window['graph_img'].update('graph.png', size=(630, 650))
     window['ddl1'].update(values=nodes_array)
     window['ddl2'].update(values=nodes_array)
@@ -89,5 +91,10 @@ if __name__ == "__main__":
                 update_app()
             except nx.exception.NetworkXError:
                 sg.Popup('Błąd', "Brak krawędzi między wybranymi wierzchołkami")
+
+        if event == 'Analizuj':
+            T = get_minimum_spanning_tree(G, pos)
+            update_app()
+            T = nx.Graph()
 
     window.close()

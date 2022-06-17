@@ -6,7 +6,7 @@ import matplotlib.image as mpimg
 img = mpimg.imread('assets\\domek_small.png')  
 
 
-def update_graph(G, pos):
+def update_graph(G, pos, T):
     labels = nx.get_edge_attributes(G, 'weight')
 
     plt.close()
@@ -14,28 +14,17 @@ def update_graph(G, pos):
     ax = plt.subplot()
     plt.title('Sieć elektryczna')
     ax.set_aspect('equal')
-
-    #Moduł analizujący
     nx.draw_networkx_edges(G, pos, ax=ax)
-    
-    T = nx.minimum_spanning_tree(G)
-
-    #nałożenie czerwonych krawedzi na graf
+    # krawędzie minimalnego drzewa rozpinającego
     nx.draw_networkx_edges(T, pos, width=1, edge_color="r")
-
-    #wypisuje posortowane najkrótsze krawędzie
-    sorted_edges = sorted(T.edges(data=True))
-    print(sorted_edges)
-    
     #Moduł analizujący
 
     plt.xlim(-1.15, 1.15)
     plt.ylim(-1.15, 1.15)
-
     trans = ax.transData.transform
     trans2 = fig.transFigure.inverted().transform
 
-    piesize = 0.1  # this is the image size
+    piesize = 0.1
     p2 = piesize / 2.0
     for n in G:
         xx, yy = trans(pos[n])  # figure coordinates
@@ -53,6 +42,11 @@ def update_graph(G, pos):
         label_pos.update({key: [value[0], value[1] - 0.11]})
     nx.draw_networkx_labels(G, label_pos, ax=ax, font_size=10, font_family='serif')
     plt.savefig("graph.png", bbox_inches='tight')
+
+
+def get_minimum_spanning_tree(G, pos):
+    T = nx.minimum_spanning_tree(G)
+    return T
 
 
 def add_edge(G, u, v, weight_of_edge):
