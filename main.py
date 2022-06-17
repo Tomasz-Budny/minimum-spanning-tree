@@ -9,7 +9,7 @@ n = 1
 nodes_array = []
 
 layout = [
-    [sg.Image('graph.png', key='graph_img', size=(400, 400))],
+    [sg.Image('graph.png', key='graph_img', size=(630, 650))],
     [sg.Button('Dodaj węzeł'), sg.Button('Usuń węzeł'),
      sg.Button('update'), sg.Button('clear')],
     [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'),
@@ -19,10 +19,10 @@ layout = [
 
 def update_app():
     update_graph(G, pos)
-    window['graph_img'].update('graph.png', size=(500, 500))
+    window['graph_img'].update('graph.png', size=(630, 650))
     window['ddl1'].update(values=nodes_array)
     window['ddl2'].update(values=nodes_array)
-    window['ddl3'].update('')
+    window['ddl3'].update('0')
 
 
 def update_pos():
@@ -63,15 +63,19 @@ if __name__ == "__main__":
             update_app()
 
         if event == 'Dodaj krawędź':
-            selected_data1 = window['ddl1'].TKStringVar.get()
-            selected_data2 = window['ddl2'].TKStringVar.get()
-            selected_data3 = float(window['ddl3'].TKStringVar.get())
-            if selected_data1 == "" or selected_data1 == "-":
-                continue
-            if selected_data2 == "" or selected_data2 == "-":
-                continue
-            add_edge(G, selected_data1, selected_data2, selected_data3)
-            update_app()
+            try:
+                selected_data1 = window['ddl1'].TKStringVar.get()
+                selected_data2 = window['ddl2'].TKStringVar.get()
+                selected_data3 = float(window['ddl3'].TKStringVar.get())
+                if selected_data1 == "" or selected_data1 == "-":
+                    continue
+                if selected_data2 == "" or selected_data2 == "-":
+                    continue
+                add_edge(G, selected_data1, selected_data2, selected_data3)
+            except ValueError:
+                sg.Popup('Błąd', "Waga musi być liczbą!")
+            finally:
+                update_app()
 
         if event == 'Usuń krawędź':
             selected_data1 = window['ddl1'].TKStringVar.get()
