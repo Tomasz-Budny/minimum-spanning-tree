@@ -50,6 +50,8 @@ def get_minimum_spanning_tree(G, pos):
 
 
 def add_edge(G, u, v, weight_of_edge):
+    if G.has_edge(u, v):
+        remove_edge(G, u, v)
     G.add_edge(u, v, weight=weight_of_edge)
 
 
