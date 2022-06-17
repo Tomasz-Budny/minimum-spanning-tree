@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 img = mpimg.imread('assets\\domek_small.png')  
-    
+
+
 def update_graph(G, pos):
     labels = nx.get_edge_attributes(G, 'weight')
 
@@ -13,8 +14,7 @@ def update_graph(G, pos):
     ax = plt.subplot()
     plt.title('Sieć elektryczna')
     ax.set_aspect('equal')
-    
-    
+
     #Moduł analizujący
     nx.draw_networkx_edges(G, pos, ax=ax)
     
@@ -54,6 +54,7 @@ def update_graph(G, pos):
     nx.draw_networkx_labels(G, label_pos, ax=ax, font_size=10, font_family='serif')
     plt.savefig("graph.png", bbox_inches='tight')
 
+
 def add_edge(G, u, v, weight_of_edge):
     G.add_edge(u, v, weight=weight_of_edge)
 
@@ -63,10 +64,12 @@ def add_node(G, n, nodes_array):
     G.add_node(name)
     nodes_array.append(name)
 
+
 def remove_node(G, n, nodes_array):
     name = name = 'Dom ' + str(n)
     G.remove_node(name)
     nodes_array.remove(name)
+
 
 def remove_edge(G, u, v):
     G.remove_edge(u, v)
