@@ -47,12 +47,14 @@ def update_graph(G, pos, T):
     plt.savefig("graph.png", bbox_inches='tight')
 
 
-def get_minimum_spanning_tree(G, pos):
+def get_minimum_spanning_tree(G):
     T = nx.minimum_spanning_tree(G)
     plt.close()
     plt.title("Minimalne drzewo rozpinające")
-    pos = graphviz_layout(T, prog="dot")
-    nx.draw(T, pos, with_labels=True)
+    Tpos = graphviz_layout(T, prog="dot")
+    nx.draw(T, Tpos, with_labels=True)
+    labels = nx.get_edge_attributes(T, 'weight')
+    nx.draw_networkx_edge_labels(T, Tpos, edge_labels=labels)
     plt.savefig("MST.png")
     MST = Image.open('MST.png')
     MST.show()

@@ -96,7 +96,7 @@ if __name__ == "__main__":
                 sg.Popup('Błąd', "Brak krawędzi między wybranymi wierzchołkami")
 
         if event == 'Analizuj':
-            T = get_minimum_spanning_tree(G, pos)
+            T = get_minimum_spanning_tree(G)
             update_app()
             T = nx.Graph()
 
