@@ -80,8 +80,8 @@ def add_node(G, n, nodes_array):
     nodes_array.append(name)
 
 
-def remove_node(G, n, nodes_array):
-    name = f'Dom{n}'
+def remove_node(G, node, nodes_array):
+    name = node
     G.remove_node(name)
     nodes_array.remove(name)
 

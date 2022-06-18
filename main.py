@@ -2,7 +2,6 @@ import numpy as np
 import PySimpleGUI as sg
 import networkx as nx
 from GraphPlot import update_graph, add_node, add_edge, remove_node, remove_edge, get_minimum_spanning_tree
-from GUI.GUI_assets import RoundedButton
 
 G = nx.Graph()
 T = nx.Graph()
@@ -15,8 +14,9 @@ nodes_array = []
 
 layout = [
     [sg.Image('graph.png', key='graph_img', size=(630, 650))],
-    [sg.Button('Dodaj węzeł'), sg.Button('Usuń węzeł'),
+    [sg.Button('Dodaj węzeł'),
      sg.Button('update'), sg.Button('clear')],
+    [sg.Button('Usuń węzeł'), sg.OptionMenu(values=['-'], key='ddl0')],
     [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'),
      sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='wi')],
     [sg.Button('Analizuj')]
@@ -26,6 +26,7 @@ layout = [
 def update_app():
     update_graph(G, pos, T)
     window['graph_img'].update('graph.png', size=(630, 650))
+    window['ddl0'].update(values=nodes_array)
     window['ddl1'].update(values=nodes_array)
     window['ddl2'].update(values=nodes_array)
     window['wi'].update('1')
@@ -52,10 +53,11 @@ if __name__ == "__main__":
             update_app()
 
         if event == 'Usuń węzeł':
-            remove_node(G, n-1, nodes_array)
-            n = n - 1
-            pos = update_pos()
-            update_app()
+            selected_node = window['ddl0'].TKStringVar.get()
+            if selected_node != "":
+                remove_node(G, selected_node, nodes_array)
+                pos = update_pos()
+                update_app()
 
         if event == 'clear':
             G.clear()
