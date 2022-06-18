@@ -49,20 +49,22 @@ def update_graph(G, pos, T):
 
 def get_minimum_spanning_tree(G):
     T = nx.minimum_spanning_tree(G)
-    plt.close()
-    sum_weights = T.size(weight='weight')
-    title = "Minimalne drzewo rozpinające"
-    if not nx.is_connected(T):
-        title = "Minimalne drzewa rozpinające"
-    plt.title(f"{title}\n(suma wag krawędzi: {sum_weights})")
-    Tpos = graphviz_layout(T, prog="dot")
-    nx.draw(T, Tpos, with_labels=True)
-    labels = nx.get_edge_attributes(T, 'weight')
-    nx.draw_networkx_edge_labels(T, Tpos, edge_labels=labels)
 
-    plt.savefig("MST.png")
-    MST = Image.open('MST.png')
-    MST.show()
+    if not nx.is_empty(T):
+        plt.close()
+        sum_weights = T.size(weight='weight')
+        title = "Minimalne drzewo rozpinające"
+        if not nx.is_connected(T):
+            title = "Minimalne drzewa rozpinające"
+        plt.title(f"{title}\n(suma wag krawędzi: {sum_weights})")
+        Tpos = graphviz_layout(T, prog="dot")
+        nx.draw(T, Tpos, with_labels=True)
+        labels = nx.get_edge_attributes(T, 'weight')
+        nx.draw_networkx_edge_labels(T, Tpos, edge_labels=labels)
+
+        plt.savefig("MST.png")
+        MST = Image.open('MST.png')
+        MST.show()
     return T
 
 
