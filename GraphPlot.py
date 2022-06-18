@@ -53,7 +53,7 @@ def get_minimum_spanning_tree(G):
     sum_weights = T.size(weight='weight')
     title = "Minimalne drzewo rozpinające"
     if not nx.is_connected(T):
-        title = "Minimalny las rozpinający"
+        title = "Minimalne drzewa rozpinające"
     plt.title(f"{title}\n(suma wag krawędzi: {sum_weights})")
     Tpos = graphviz_layout(T, prog="dot")
     nx.draw(T, Tpos, with_labels=True)
