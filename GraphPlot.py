@@ -2,6 +2,9 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import pydot
+from networkx.drawing.nx_pydot import graphviz_layout
+from PIL import Image
 
 img = mpimg.imread('assets\\domek_small.png')  
 
@@ -46,6 +49,13 @@ def update_graph(G, pos, T):
 
 def get_minimum_spanning_tree(G, pos):
     T = nx.minimum_spanning_tree(G)
+    plt.close()
+    plt.title("Minimalne drzewo rozpinające")
+    pos = graphviz_layout(T, prog="dot")
+    nx.draw(T, pos, with_labels=True)
+    plt.savefig("MST.png")
+    MST = Image.open('MST.png')
+    MST.show()
     return T
 
 
@@ -56,13 +66,13 @@ def add_edge(G, u, v, weight_of_edge):
 
 
 def add_node(G, n, nodes_array):
-    name = 'Dom ' + str(n)
+    name = f'Dom{n}'
     G.add_node(name)
     nodes_array.append(name)
 
 
 def remove_node(G, n, nodes_array):
-    name = 'Dom ' + str(n)
+    name = f'Dom{n}'
     G.remove_node(name)
     nodes_array.remove(name)
 
