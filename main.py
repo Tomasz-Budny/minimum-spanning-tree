@@ -9,12 +9,15 @@ pos = nx.shell_layout(G)
 n = 1
 nodes_array = []
 
+# ddl - Drop Down List
+# wi - weight input
+
 layout = [
     [sg.Image('graph.png', key='graph_img', size=(630, 650))],
     [sg.Button('Dodaj węzeł'), sg.Button('Usuń węzeł'),
      sg.Button('update'), sg.Button('clear')],
     [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'),
-     sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='ddl3')],
+     sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='wi')],
     [sg.Button('Analizuj')]
 ]
 
@@ -24,7 +27,7 @@ def update_app():
     window['graph_img'].update('graph.png', size=(630, 650))
     window['ddl1'].update(values=nodes_array)
     window['ddl2'].update(values=nodes_array)
-    window['ddl3'].update('0')
+    window['wi'].update('1')
 
 
 def update_pos():
@@ -68,7 +71,7 @@ if __name__ == "__main__":
             try:
                 selected_data1 = window['ddl1'].TKStringVar.get()
                 selected_data2 = window['ddl2'].TKStringVar.get()
-                selected_data3 = float(window['ddl3'].TKStringVar.get())
+                selected_data3 = float(window['wi'].TKStringVar.get())
                 if selected_data1 == "" or selected_data1 == "-":
                     continue
                 if selected_data2 == "" or selected_data2 == "-":
