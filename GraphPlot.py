@@ -5,6 +5,8 @@ import matplotlib.image as mpimg
 import pydot
 from networkx.drawing.nx_pydot import graphviz_layout
 from PIL import Image
+import os
+os.environ["PATH"] += 'gev\\bin\\'
 
 img = mpimg.imread('assets\\domek_small.png')  
 
