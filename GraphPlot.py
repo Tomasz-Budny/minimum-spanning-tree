@@ -2,11 +2,7 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
-import pydot
-from networkx.drawing.nx_pydot import graphviz_layout
 from PIL import Image
-import os
-os.environ["PATH"] += 'gev\\bin\\'
 
 img = mpimg.imread('assets\\domek_small.png')  
 
@@ -59,7 +55,7 @@ def get_minimum_spanning_tree(G):
         if not nx.is_connected(T):
             title = "Minimalne drzewa rozpinające"
         plt.title(f"{title}\n(suma wag krawędzi: {sum_weights})")
-        Tpos = graphviz_layout(T, prog="dot")
+        Tpos = nx.planar_layout(T)
         nx.draw(T, Tpos, with_labels=True)
         labels = nx.get_edge_attributes(T, 'weight')
         nx.draw_networkx_edge_labels(T, Tpos, edge_labels=labels)
@@ -77,7 +73,7 @@ def add_edge(G, u, v, weight_of_edge):
 
 
 def add_node(G, n, nodes_array):
-    name = f'Dom{n}'
+    name = f'Dom {n}'
     G.add_node(name)
     nodes_array.append(name)
 

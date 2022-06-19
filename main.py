@@ -14,8 +14,7 @@ nodes_array = []
 
 layout = [
     [sg.Image('graph.png', key='graph_img', size=(630, 650))],
-    [sg.Button('Dodaj węzeł'),
-     sg.Button('update'), sg.Button('clear')],
+    [sg.Button('Dodaj węzeł'), sg.Button('Wyczyść')],
     [sg.Button('Usuń węzeł'), sg.OptionMenu(values=['-'], key='ddl0')],
     [sg.Button('Dodaj krawędź'), sg.Button('Usuń krawędź'), sg.OptionMenu(values=['-'], key='ddl1'),
      sg.OptionMenu(values=['-'], key='ddl2'), sg.Text('Waga krawędzi'), sg.Input(size=(5, 5), key='wi')],
@@ -59,15 +58,11 @@ if __name__ == "__main__":
                 pos = update_pos()
                 update_app()
 
-        if event == 'clear':
+        if event == 'Wyczyść':
             G.clear()
             pos = update_pos()
             nodes_array.clear()
             n = 1
-            update_app()
-
-        if event == 'update':
-            pos = update_pos()
             update_app()
 
         if event == 'Dodaj krawędź':
