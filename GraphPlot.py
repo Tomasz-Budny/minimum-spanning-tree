@@ -2,11 +2,12 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+from PIL import Image
 
-img = mpimg.imread('assets\\domek_small.png')
+img = mpimg.imread('assets\\domek_small.png')  
 
 
-def update_graph(G, pos):
+def update_graph(G, pos, T):
     labels = nx.get_edge_attributes(G, 'weight')
 
     plt.close()
@@ -15,14 +16,16 @@ def update_graph(G, pos):
     plt.title('Sieć elektryczna')
     ax.set_aspect('equal')
     nx.draw_networkx_edges(G, pos, ax=ax)
+    # koloruje krawędzie minimalnego drzewa rozpinającego
+    nx.draw_networkx_edges(T, pos, width=5, edge_color="r")
+    #Moduł analizujący
 
     plt.xlim(-1.15, 1.15)
     plt.ylim(-1.15, 1.15)
-
     trans = ax.transData.transform
     trans2 = fig.transFigure.inverted().transform
 
-    piesize = 0.1  # this is the image size
+    piesize = 0.1
     p2 = piesize / 2.0
     for n in G:
         xx, yy = trans(pos[n])  # figure coordinates
@@ -42,11 +45,44 @@ def update_graph(G, pos):
     plt.savefig("graph.png", bbox_inches='tight')
 
 
-def add_edge(G, u, v):
-    G.add_edge(u, v)
+def get_minimum_spanning_tree(G):
+    T = nx.minimum_spanning_tree(G)
+
+    if not nx.is_empty(T):
+        plt.close()
+        sum_weights = T.size(weight='weight')
+        title = "Minimalne drzewo rozpinające"
+        if not nx.is_connected(T):
+            title = "Minimalne drzewa rozpinające"
+        plt.title(f"{title}\n(suma wag krawędzi: {sum_weights})")
+        Tpos = nx.planar_layout(T)
+        nx.draw(T, Tpos, with_labels=True)
+        labels = nx.get_edge_attributes(T, 'weight')
+        nx.draw_networkx_edge_labels(T, Tpos, edge_labels=labels)
+
+        plt.savefig("MST.png")
+        MST = Image.open('MST.png')
+        MST.show()
+    return T
+
+
+def add_edge(G, u, v, weight_of_edge):
+    if G.has_edge(u, v):
+        remove_edge(G, u, v)
+    G.add_edge(u, v, weight=weight_of_edge)
 
 
 def add_node(G, n, nodes_array):
-    name = 'Dom ' + str(n)
+    name = f'Dom {n}'
     G.add_node(name)
     nodes_array.append(name)
+
+
+def remove_node(G, node, nodes_array):
+    name = node
+    G.remove_node(name)
+    nodes_array.remove(name)
+
+
+def remove_edge(G, u, v):
+    G.remove_edge(u, v)
